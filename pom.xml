@@ -17,9 +17,74 @@
     <jruby.version>9.2.9.0</jruby.version>
   </properties>
 
+  <repositories>
+    <repository>
+      <id>rubygems-proxy</id>
+      <name>Rubygems Proxy</name>
+      <url>http://rubygems-proxy.torquebox.org/releases</url>
+      <layout>default</layout>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+        <updatePolicy>never</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
   <build>
     <defaultGoal>process-resources</defaultGoal>
     <plugins>
+      <plugin>
+        <groupId>de.saumya.mojo</groupId>
+        <artifactId>gem-maven-plugin</artifactId>
+	<version>1.1.8</version>
+	<executions>
+	  <execution>
+	    <goals>
+	      <goal>sets</goal>
+	    </goals>
+	    <configuration>
+	      <gems>
+		<addressable>2.6.0</addressable>
+		<afm>0.2.2</afm>
+		<Ascii85>1.0.3</Ascii85>
+		<asciidoctor>2.0.10</asciidoctor>
+		<asciidoctor-bibtex>0.7.1</asciidoctor-bibtex>
+		<asciidoctor-pdf>1.5.0.beta.2</asciidoctor-pdf>
+		<bibtex-ruby>4.4.7</bibtex-ruby>
+		<citeproc>1.0.10</citeproc>
+		<citeproc-ruby>1.1.12</citeproc-ruby>
+		<csl>1.5.1</csl>
+		<csl-styles>1.0.1.10</csl-styles>
+		<css_parser>1.7.0</css_parser>
+		<hashery>2.1.2</hashery>
+		<kramdown>1.17.0</kramdown>
+		<kramdown-asciidoc>1.0.1</kramdown-asciidoc>
+		<latex-decode>0.3.1</latex-decode>
+		<namae>1.0.1</namae>
+		<pdf-core>0.7.0</pdf-core>
+		<pdf-reader>2.2.1</pdf-reader>
+		<polyglot>0.3.5</polyglot>
+		<prawn>2.2.2</prawn>
+		<prawn-icon>2.4.0</prawn-icon>
+		<prawn-svg>0.29.1</prawn-svg>
+		<prawn-table>0.2.2</prawn-table>
+		<prawn-templates>0.1.1</prawn-templates>
+		<public_suffix>3.1.1</public_suffix>
+		<ruby-rc4>0.1.5</ruby-rc4>
+		<safe_yaml>1.0.5</safe_yaml>
+		<thread_safe>0.3.6</thread_safe>
+		<treetop>1.5.3</treetop>
+		<ttfunk>1.5.1</ttfunk>
+		<unicode>0.4.4.4</unicode>
+		<unicode_utils>1.4.0</unicode_utils>
+	      </gems>
+	    </configuration>
+	  </execution>
+	</executions>
+      </plugin>
       <plugin>
         <groupId>org.asciidoctor</groupId>
         <artifactId>asciidoctor-maven-plugin</artifactId>
@@ -50,6 +115,8 @@
             <sourcedir>${project.build.sourceDirectory}</sourcedir>
             <project-version>${project.version}</project-version>
           </attributes>
+	  <gemPath>${project.build.directory}/rubygems</gemPath>
+	  <requires>asciidoctor-bibtex</requires>
         </configuration>
         <executions>
           <execution>
