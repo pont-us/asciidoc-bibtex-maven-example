@@ -1,66 +1,18 @@
-= Sample of using asciidoctor-bibtex
+= Minimal asciidoctor-bibtex example
 :bibtex-file: references.bib
 :bibtex-order: alphabetical
 :bibtex-style: apa-6th-edition
 
+== Introduction
 
-== Samples
+This document does not attempt to exercise all the capabilities of
+asciidoctor-bibtex; it just gives a minimal example of usage to confirm
+that asciidoctor-bibtex is being used during processing.
 
-The bibliography is searched in the folder of the document, and then in
-~/Documents.
+== A citation
 
-Author-year references can use different styles such as: cite:[Lane12b] or
-citenp:[Lane12a].
+Here is a citation: cite:[dunlop1997rock].
 
-Page numbers (locators) can be added: cite:[Lane12a(89)] or citenp:[Lane12a(89-93)].
-
-A bit of pretext can be included too: See cite:see[Lane12a(89)]
-
-We can include other files, which are also processed:
-
-To include the reference list, use the section template before title, to
-prevent problems with a2x.
-
-References can be inserted in lists, too:
-
-1. This is a complex *item* with _formats_. See cite:[Lane12a].
-2. See cite:[Anderson98].
-3. See cite:[Anderson04].
-
-Also works for unordered list:
-
-* See cite:[Lane12a].
-* See cite:[Anderson98].
-* See cite:[Anderson04].
-
-Shall also work in tables:
-
-[cols="1,1",options="header"]
-|===
-| Term
-| Citation
-
-| Item 1
-| Illustrated in cite:[Lane12a].
-|===
-
-Shall also work in a footnote footnote:[We cite cite:[Lane12a] for this.].
-
-Shall also work in block title:
-
-. This table is extracted from cite:[Lane12b]
-[cols="1,1",options="header"]
-|===
-| Term
-| Citation
-
-| Item 1
-| Illustrated in cite:[Lane12a].
-|===
-include::sample-include.adoc[]
-
-
-[sect2] 
 == Bibliography
 
-bibliography::references.bib[ieee]
+bibliography::references.bib[apa-6th-edition]
