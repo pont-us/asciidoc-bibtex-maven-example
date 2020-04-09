@@ -3,10 +3,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.asciidoctor.maven</groupId>
-  <artifactId>asciidoc-to-html-example</artifactId>
+  <artifactId>asciidoctor-maven-bibtex-example</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <name>AsciiDoc to HTML Maven Example</name>
-  <description>An example project that demonstrates how to convert AsciiDoc to HTML5 using the Asciidoctor Maven plugin.</description>
+  <description>A minimal example project demonstrating the use of the asciidoctor-bibtex gem with the Asciidoctor Maven plugin.</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,6 +20,8 @@
 
   <repositories>
     <repository>
+      <!-- This repository provides a Maven proxy for the official
+           RubyGems.org repository. -->
       <id>rubygems-proxy</id>
       <name>Rubygems Proxy</name>
       <url>http://rubygems-proxy.torquebox.org/releases</url>
@@ -38,12 +40,23 @@
     <defaultGoal>process-resources</defaultGoal>
     <plugins>
       <plugin>
+	<!-- A plugin which fetches ruby gems and installs them
+	     in the Maven target directory. -->
         <groupId>de.saumya.mojo</groupId>
         <artifactId>gem-maven-plugin</artifactId>
 	<version>1.1.8</version>
 	<executions>
 	  <execution>
 	    <goals>
+	      <!-- We use the "sets" goal to explicitly specify versions
+	           of all needed gems (including direct and transitive
+	           dependencies), to avoid problems with automatic
+	           dependency resolution for gems in Maven as described in
+	           https://github.com/asciidoctor/asciidoctor-maven-examples/issues/41#issuecomment-171810511
+	           . Dependencies and their versions were determined by
+	           installing asciidoctor-bibtex using the standard gem
+	           tool and thereafter examining the contents of ~/.gem.
+	      -->
 	      <goal>sets</goal>
 	    </goals>
 	    <configuration>
@@ -91,13 +104,13 @@
         <artifactId>asciidoctor-maven-plugin</artifactId>
         <version>${asciidoctor.maven.plugin.version}</version>        
         <dependencies>
-          <!-- Comment this section to use the default jruby artifact provided by the plugin -->
+          <!-- override the default jruby artifact versions
+	       provided by the plugin -->
           <dependency>
             <groupId>org.jruby</groupId>
             <artifactId>jruby-complete</artifactId>
             <version>${jruby.version}</version>
           </dependency>
-          <!-- Comment this section to use the default AsciidoctorJ artifact provided by the plugin -->
           <dependency>
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj</artifactId>
@@ -111,43 +124,25 @@
         </dependencies>
         <configuration>
           <sourceDirectory>src/docs/asciidoc</sourceDirectory>
-          <!-- If you set baseDir to ${project.basedir}, top-level includes are resolved relative to the project root -->
-          <!--
-          <baseDir>${project.basedir}</baseDir>
-          -->
-          <!-- Attributes common to all output formats -->
-          <attributes>
-            <endpoint-url>http://example.org</endpoint-url>
-            <sourcedir>${project.build.sourceDirectory}</sourcedir>
-            <project-version>${project.version}</project-version>
-          </attributes>
 	  <gemPath>${project.build.directory}/rubygems</gemPath>
 	  <requires>asciidoctor-bibtex</requires>
         </configuration>
         <executions>
           <execution>
-            <id>asciidoc-to-html</id>
+            <id>generate-html</id>
             <phase>generate-resources</phase>
             <goals>
               <goal>process-asciidoc</goal>
             </goals>
             <configuration>
               <backend>html5</backend>
-              <sourceHighlighter>coderay</sourceHighlighter>
               <attributes>
-                <imagesdir>./images</imagesdir>
-                <toc>left</toc>
                 <icons>font</icons>
-                <sectanchors>true</sectanchors>
-                <!-- set the idprefix to blank -->
-                <idprefix/>
-                <idseparator>-</idseparator>
-                <docinfo1>true</docinfo1>
               </attributes>
             </configuration>
           </execution>
 	  <execution>
-            <id>generate-pdf-doc</id>
+            <id>generate-pdf</id>
             <phase>generate-resources</phase>
             <goals>
               <goal>process-asciidoc</goal>
@@ -156,10 +151,6 @@
               <backend>pdf</backend>
               <attributes>
                 <icons>font</icons>
-                <pagenums/>
-                <toc/>
-                <idprefix/>
-                <idseparator>-</idseparator>
               </attributes>
             </configuration>
           </execution>
