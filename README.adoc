@@ -1,11 +1,12 @@
-= Asciidoctor Maven Plugin: AsciiDoc to HTML Example
+= Using asciidoctor-bibtex with the Asciidoctor Maven plugin
 
-An example project that demonstrates how to convert AsciiDoc to HTML5 using the Asciidoctor Maven plugin.
+This is a minimal example project which demonstrates how to use
+asciidoctor-bibtex with the Asciidoctor Maven plugin. The
+http://rubygems-proxy.torquebox.org/[TorqueBox RubyGems Maven Proxy
+Repository] is used to install the asciidoctor-bibtex gem and its
+dependencies in Maven's target directory.
 
-== Usage
+Executing `mvn` will process the Asciidoc example document into HTML and
+PDF files in `target/generated-docs`.
 
-Convert the AsciiDoc to HTML5 by invoking the `process-resources` goal (configured as the default goal):
-
- $ mvn
-
-Open the file _target/generated-docs/example-manual.html_ in your browser to see the generated HTML file.
+By Pontus Lurcock, 2020. Released into the public domain.
